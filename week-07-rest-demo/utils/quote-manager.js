@@ -3,6 +3,13 @@ const BASE_URL = 'http://localhost:3001/quotes';
  * Manages the 'quotes' API with the backend
  */
 const QuoteManager = {
+  getSavedQuotesByAuthor: async function (name) {
+    const res = await fetch(
+      `${BASE_URL}?author=${name}`
+    );
+    return await res.json();
+  },
+
   quoteExists: async function (quote) {
     const res = await fetch(
       `${BASE_URL}?author=${quote.author}&quote=${quote.quote}`
@@ -27,6 +34,7 @@ const QuoteManager = {
     if (!quote.quote || !quote.author) {
       throw new Error('Incompatible type');
     }
+    
     const res = await fetch(BASE_URL, {
       method: 'POST', // or 'PUT'
       headers: {
